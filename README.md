@@ -35,7 +35,7 @@ Nombres:
  
 --------------
 
-## 🚀 Cómo ejecutar el proyecto localmente
+## Cómo ejecutar el proyecto localmente
  
 ### 1. Clonar el repositorio
  
