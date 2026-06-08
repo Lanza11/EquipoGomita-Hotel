@@ -8,7 +8,7 @@ export type User = {
   id: string;
   name: string;
   email: string;
-  image: string;
+  image: string | null;
   deleted: boolean;
   enabled: boolean;
   role: 'ADMIN' | 'USER';

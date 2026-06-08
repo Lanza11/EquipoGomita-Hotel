@@ -27,6 +27,17 @@ export default async function TransaccionesPage() {
     },
   });
 
+  const maestrosForClient = maestros.map((maestro) => ({
+    ...maestro,
+    createdAt: maestro.createdAt.toISOString(),
+    movimientos: maestro.movimientos.map((movimiento) => ({
+      ...movimiento,
+      createdAt: movimiento.createdAt.toISOString(),
+      updatedAt: movimiento.updatedAt.toISOString(),
+      date: movimiento.date.toISOString(),
+    })),
+  }));
+
   return (
     <div className='flex min-h-screen flex-col gap-6 p-6 lg:p-8'>
       <div className='space-y-2'>
@@ -36,7 +47,7 @@ export default async function TransaccionesPage() {
         </p>
       </div>
 
-      <MovementManager initialMaestros={maestros} />
+      <MovementManager initialMaestros={maestrosForClient} />
     </div>
   );
 }

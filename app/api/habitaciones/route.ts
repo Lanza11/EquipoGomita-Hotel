@@ -62,21 +62,32 @@ export async function PUT(request: NextRequest) {
   try {
     const body = (await request.json()) as {
       id: string;
-      numero?: string;
+      numero?: string | number;
       tipo?: 'SIMPLE' | 'DOBLE' | 'SUITE';
-      precio?: number;
+      precio?: number | string;
       descripcion?: string | null;
       estado?: 'DISPONIBLE' | 'OCUPADA' | 'MANTENIMIENTO';
     };
 
     if (!body.id) return NextResponse.json({ error: 'Room id required' }, { status: 400 });
 
+    const numero = body.numero !== undefined ? Number(body.numero) : undefined;
+    const precio = body.precio !== undefined ? Number(body.precio) : undefined;
+
+    if (numero !== undefined && !Number.isFinite(numero)) {
+      return NextResponse.json({ error: 'Número inválido' }, { status: 400 });
+    }
+
+    if (precio !== undefined && !Number.isFinite(precio)) {
+      return NextResponse.json({ error: 'Precio inválido' }, { status: 400 });
+    }
+
     const updated = await prisma.habitacion.update({
       where: { id: body.id },
       data: {
-        ...(body.numero ? { numero: body.numero } : {}),
+        ...(numero !== undefined ? { numero } : {}),
         ...(body.tipo ? { tipo: body.tipo } : {}),
-        ...(body.precio ? { precio: body.precio } : {}),
+        ...(precio !== undefined ? { precio } : {}),
         descripcion: body.descripcion ?? undefined,
         ...(body.estado ? { estado: body.estado } : {}),
       },

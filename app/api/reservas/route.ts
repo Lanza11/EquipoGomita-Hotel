@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
         },
       });
 
-      const availableRooms = habitaciones.filter((habitacion) => habitacion.reservas.length === 0);
+      const availableRooms = habitaciones.filter((habitacion: { reservas: unknown[] }) => habitacion.reservas.length === 0);
 
       return NextResponse.json({ habitaciones: availableRooms }, { status: 200 });
     }
@@ -100,7 +100,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Habitación no encontrada' }, { status: 404 });
     }
 
-    if (room.reservas.some((reserva) => overlaps(reserva.fechaInicio, reserva.fechaFin, fechaInicio, fechaFin))) {
+    if (
+      room.reservas.some((reserva: { fechaInicio: Date; fechaFin: Date }) =>
+        overlaps(reserva.fechaInicio, reserva.fechaFin, fechaInicio, fechaFin)
+      )
+    ) {
       return NextResponse.json({ error: 'La habitación ya está reservada para esas fechas' }, { status: 409 });
     }
 

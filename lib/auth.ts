@@ -82,7 +82,7 @@ export function verifySessionToken(token: string) {
 export async function getSessionUser() {
   // `cookies()` can be async in newer Next.js versions; await to be safe
   const cookieStore = await cookies();
-  const cookie = cookieStore.get ? cookieStore.get(SESSION_COOKIE_NAME) : (cookieStore[SESSION_COOKIE_NAME] as { value?: string } | undefined);
+  const cookie = cookieStore.get(SESSION_COOKIE_NAME);
   const token = cookie?.value;
 
   if (!token) {

@@ -28,21 +28,21 @@ export async function POST(request: NextRequest) {
     }
 
     const token = createSessionToken({
-      id: authenticatedUser.id,
-      name: authenticatedUser.name,
-      email: authenticatedUser.email,
-      image: authenticatedUser.image,
-      role: authenticatedUser.role,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      image: user.image,
+      role: user.role,
     });
 
     const response = NextResponse.json(
       {
         user: {
-          id: authenticatedUser.id,
-          name: authenticatedUser.name,
-          email: authenticatedUser.email,
-          image: authenticatedUser.image,
-          role: authenticatedUser.role,
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+          role: user.role,
         },
       },
       { status: 200 }

@@ -18,6 +18,12 @@ export default async function ReservasPage() {
     },
   });
 
+  const reservasForClient = reservas.map((reserva) => ({
+    ...reserva,
+    fechaInicio: reserva.fechaInicio.toISOString(),
+    fechaFin: reserva.fechaFin.toISOString(),
+  }));
+
   const guests = await prisma.user.findMany({
     where: { enabled: true, deleted: false },
     orderBy: { name: 'asc' },
@@ -38,7 +44,7 @@ export default async function ReservasPage() {
         </p>
       </div>
 
-      <ReservationManager guests={guests} rooms={rooms} reservations={reservas} />
+      <ReservationManager guests={guests} rooms={rooms} reservations={reservasForClient} />
     </div>
   );
 }
