@@ -31,15 +31,7 @@ Nombres:
 ## Contiene variables de entorno de supabase
  
 ```env
-# Conexión pooler para la app en runtime (puerto 6543)
 DATABASE_URL="postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres?pgbouncer=true"
- 
-# Conexión directa para migraciones (puerto 5432)
-DIRECT_URL="postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres"
- 
-# Secreto para firmar las cookies de sesión
-SESSION_SECRET="un-secreto-seguro"
-```
 
 --------------
  
