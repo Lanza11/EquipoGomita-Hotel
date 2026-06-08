@@ -1,8 +1,15 @@
 # Equipo_Gomita — Sistema de Reservas de Hotel
  
-Aplicación web fullstack de administración hotelera desarrollada con **Next.js 15**, **React**, **TailwindCSS**, **Prisma** y **Supabase (PostgreSQL)**.
- 
-Permite gestionar habitaciones, reservas, inventarios (maestros y movimientos) y usuarios con roles diferenciados.
+Aplicación web fullstack de administración hotelera desarrollada como proyecto evaluativo. 
+Simula el sistema interno de un hotel ficticio, permitiendo
+gestionar habitaciones, reservas, inventarios y usuarios desde un panel de administración
+centralizado.
+
+La aplicación diferencia dos tipos de usuarios: administradores con acceso completo a todas
+las funcionalidades, y usuarios regulares con acceso restringido a transacciones y maestros.
+Toda la información se persiste en una base de datos PostgreSQL alojada en Supabase, y el
+sistema maneja autenticación propia mediante cookies de sesión firmadas, sin depender de
+librerías externas de autenticación.
  
 --------------
  
@@ -28,12 +35,52 @@ Nombres:
  
 --------------
 
-## Contiene variables de entorno de supabase
+## 🚀 Cómo ejecutar el proyecto localmente
+ 
+### 1. Clonar el repositorio
+ 
+```bash
+git clone https://github.com/<org>/Equipo_Gomita-HotelReservas.git
+cd Equipo_Gomita-HotelReservas
+```
+ 
+### 2. Instalar dependencias
+ 
+```bash
+pnpm install
+```
+ 
+### 3. Configurar variables de entorno
+ 
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
  
 ```env
+# Conexión pooler para la app en runtime (puerto 6543)
 DATABASE_URL="postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres?pgbouncer=true"
-```
 
+```
+### 4. Generar el cliente de Prisma y aplicar migraciones
+ 
+```bash
+npx prisma generate
+npx prisma migrate dev --name migracion-inicial
+```
+ 
+### 5. Poblar la base de datos con usuarios demo
+ 
+```bash
+pnpm add -D tsx
+npx prisma db seed
+```
+ 
+### 6. Iniciar el servidor de desarrollo
+ 
+```bash
+pnpm dev
+```
+ 
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+ 
 --------------
  
 ## Despliegue
