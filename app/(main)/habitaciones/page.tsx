@@ -60,7 +60,7 @@ export default async function HabitacionesPage() {
               </tr>
             </thead>
             <tbody>
-              {habitaciones.map((habitacion) => {
+              {habitaciones.map((habitacion: any) => {
                 const last = habitacion.reservas[0];
                 const hasValidDates =
                   last && !isNaN(new Date(last.fechaInicio).getTime()) && !isNaN(new Date(last.fechaFin).getTime());
