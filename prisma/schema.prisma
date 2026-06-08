@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Enum_Role {
+  ADMIN
+  USER
+}
+
+enum Enum_TipoMovimiento {
+  ENTRADA
+  SALIDA
+}
+
+enum Enum_TipoHabitacion {
+  SIMPLE
+  DOBLE
+  SUITE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  image     String?
+  deleted   Boolean  @default(false)
+  enabled   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  perfil    Perfil?
+  role      Enum_Role @default(USER)
+  movimientos Movimiento[]
+  maestrosCreados Maestro[]
+  reservas    Reserva[]
+}
+
+model Perfil {
+  id        String   @id @default(cuid())
+  lastName  String
+  address   String
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Habitacion {
+  id          String   @id @default(cuid())
+  numero      Int      @unique
+  tipo        Enum_TipoHabitacion
+  precio      Float
+  descripcion String
+  estado      String   @default("DISPONIBLE")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  reservas    Reserva[]
+}
+
+model Reserva {
+  id          String   @id @default(cuid())
+  fechaInicio DateTime
+  fechaFin    DateTime
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  habitacionId String
+  habitacion  Habitacion @relation(fields: [habitacionId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Maestro {
+  id          String   @id @default(cuid())
+  name        String
+  balance     Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  movimientos Movimiento[]
+}
+
+model Movimiento {
+  id          String   @id @default(cuid())
+  tipo        Enum_TipoMovimiento
+  quantity    Int
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  maestroId   String
+  maestro     Maestro  @relation(fields: [maestroId], references: [id])
+  createdById String
+  createdBy   User     @relation(fields: [createdById], references: [id])
+}
