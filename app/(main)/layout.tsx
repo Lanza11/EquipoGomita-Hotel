@@ -15,11 +15,11 @@ export default async function RootLayout({
       {sessionUser ? (
         <SidebarProvider
           style={
-            {
-              '--sidebar-width': 'calc(var(--spacing) * 72)',
-              '--header-height': 'calc(var(--spacing) * 12)',
-            }
-          }
+                  {
+                    ['--sidebar-width' as string]: 'calc(var(--spacing) * 72)',
+                    ['--header-height' as string]: 'calc(var(--spacing) * 12)',
+                  }
+                }
         >
           <AppSidebar user={sessionUser} variant='inset' />
           <SidebarInset>{children}</SidebarInset>
