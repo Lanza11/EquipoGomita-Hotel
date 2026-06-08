@@ -26,7 +26,7 @@ Nombres:
 ### Administrador
 --------------
  Email: `admin@hotel.com`
- Contraseña  `admin123`
+ Contraseña  `12356`
  
 ### Usuario
 --------------
