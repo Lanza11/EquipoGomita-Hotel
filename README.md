@@ -1,4 +1,4 @@
-# Equipo_Gomita — Sistema de Reservas de Hotel
+# Equipo Gomita — Sistema de Reservas de Hotel
  
 Aplicación web fullstack de administración hotelera desarrollada como proyecto evaluativo. 
 Simula el sistema interno de un hotel ficticio, permitiendo
