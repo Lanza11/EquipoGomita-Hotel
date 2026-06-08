@@ -10,11 +10,15 @@ export default async function HabitacionesPage() {
 
   if (!sessionUser) {
     redirect('/login');
+    return null;
   }
   if (sessionUser.role !== 'ADMIN') {
     // Only admins can manage rooms
     redirect('/');
+    return null;
   }
+
+  const isAdmin = sessionUser.role === 'ADMIN';
 
   const habitaciones = await prisma.habitacion.findMany({
     orderBy: { numero: 'asc' },
@@ -56,26 +60,30 @@ export default async function HabitacionesPage() {
               </tr>
             </thead>
             <tbody>
-              {habitaciones.map((habitacion) => (
-                <tr key={habitacion.id} className='border-t'>
-                  <td className='px-4 py-3 font-medium'>{habitacion.numero}</td>
-                  <td className='px-4 py-3'>{habitacion.tipo}</td>
-                  <td className='px-4 py-3'>{habitacion.precio}</td>
-                  <td className='px-4 py-3'>{habitacion.estado}</td>
-                  <td className='px-4 py-3'>
-                    {habitacion.reservas[0]
-                      ? `${new Date(habitacion.reservas[0].fechaInicio).toLocaleDateString('es-CO')} - ${new Date(habitacion.reservas[0].fechaFin).toLocaleDateString('es-CO')}`
-                      : 'Sin reservas'}
-                  </td>
-                  <td className='px-4 py-3'>
-                    {/* RoomActions is a client component */}
-                    <div>
-                      {/* @ts-expect-error Server -> Client prop */}
-                      <RoomActions isAdmin={sessionUser.role === 'ADMIN'} room={{ id: habitacion.id, numero: habitacion.numero, estado: habitacion.estado }} />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {habitaciones.map((habitacion) => {
+                const last = habitacion.reservas[0];
+                const hasValidDates =
+                  last && !isNaN(new Date(last.fechaInicio).getTime()) && !isNaN(new Date(last.fechaFin).getTime());
+                const lastReservaText = hasValidDates
+                  ? `${new Date(last.fechaInicio).toLocaleDateString('es-CO')} - ${new Date(last.fechaFin).toLocaleDateString('es-CO')}`
+                  : 'Sin reservas';
+
+                return (
+                  <tr key={habitacion.id} className='border-t'>
+                    <td className='px-4 py-3 font-medium'>{habitacion.numero}</td>
+                    <td className='px-4 py-3'>{habitacion.tipo}</td>
+                    <td className='px-4 py-3'>{habitacion.precio}</td>
+                    <td className='px-4 py-3'>{habitacion.estado}</td>
+                    <td className='px-4 py-3'>{lastReservaText}</td>
+                    <td className='px-4 py-3'>
+                      {/* RoomActions is a client component */}
+                      <div>
+                        <RoomActions isAdmin={isAdmin} room={{ id: habitacion.id, numero: habitacion.numero, estado: habitacion.estado }} />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </CardContent>
