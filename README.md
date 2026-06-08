@@ -85,7 +85,7 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
  
 ## Despliegue
  
-La aplicación está desplegada en Vercel:
+La aplicación está desplegada en Vercel: https://equipo-gomita-hotel.vercel.app/
  
  
 ## Estructura del proyecto
