@@ -1,4 +1,4 @@
-#Equipo_Gomita — Sistema de Reservas de Hotel
+# Equipo_Gomita — Sistema de Reservas de Hotel
  
 Aplicación web fullstack de administración hotelera desarrollada con **Next.js 15**, **React**, **TailwindCSS**, **Prisma** y **Supabase (PostgreSQL)**.
  
@@ -6,7 +6,7 @@ Permite gestionar habitaciones, reservas, inventarios (maestros y movimientos) y
  
 --------------
  
-##Integrantes
+## Integrantes
  
 Nombres:
 - Juan David García García
@@ -14,7 +14,7 @@ Nombres:
  
 -----------------
 
-##Credenciales de acceso
+## Credenciales de acceso
  
 ### Administrador
 --------------
