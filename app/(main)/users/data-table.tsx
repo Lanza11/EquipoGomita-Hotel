@@ -20,6 +20,7 @@ interface DataTableProps {
   columns: ColumnDef<User>[];
   data: User[];
 }
+const accessorKey = 'accessorKey' in column ? column.accessorKey : undefined;
 
 export function DataTable({ columns, data }: DataTableProps) {
   return (
@@ -28,7 +29,7 @@ export function DataTable({ columns, data }: DataTableProps) {
         <TableHeader>
           <TableRow>
             {columns.map((column) => (
-              <TableHead className='text-center' key={String(column.id ?? column.accessorKey ?? column.header)}>
+              <TableHead className='text-center' key={String(column.id ?? accessorKey ?? column.header)}>
                 {typeof column.header === 'string' ? column.header : 'Campo'}
               </TableHead>
             ))}
